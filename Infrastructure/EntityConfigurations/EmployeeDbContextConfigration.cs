@@ -14,13 +14,13 @@ namespace Infrastructure.EntityConfigurations
             builder.Property(e => e.Name).HasColumnName("Name").IsRequired();
            
             builder.Property(e => e.Salary).HasColumnName("Salary").IsRequired();
-            builder.Property(e => e.IsManeger).HasColumnName("Is_Maneger");
             builder.Property(e => e.DepartmentId).HasColumnName("Department_Id");
 
             //------------Relations---
             builder.HasOne(e => e.Department)
-                .WithMany(p => p.Employee)
-                .HasForeignKey(e => e.DepartmentId);
+                   .WithMany(e => e.Employee)
+                   .HasForeignKey(e => e.DepartmentId);
+
         }
     }
 }

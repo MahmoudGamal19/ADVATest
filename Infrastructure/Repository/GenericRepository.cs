@@ -49,25 +49,35 @@ namespace Infrastructure.Repository
                 _context.Set<TEntity>().RemoveRange(await _context.Set<TEntity>().Where(predicate).ToListAsync());
         }
 
-        public List<TEntity> GetAll(Expression<Func<TEntity, bool>> predicate)
+        public List<TEntity> GetAll()
         {
-            var entities =  _context.Set<TEntity>().Where(predicate).ToList();
+            var entities =  _context.Set<TEntity>().ToList();
             if (entities == null)
                 throw new ArgumentNullException(nameof(entities));
             return entities;
         }
 
-        public async Task<List<TEntity>> GetAllAsNoTrackingAsync(Expression<Func<TEntity, bool>> predicate)
+        public async Task<List<TEntity>> GetAllAsNoTrackingAsync(Expression<Func<TEntity, bool>>? predicate = null)
         {
-            var entities = await _context.Set<TEntity>().Where(predicate).AsNoTracking().ToListAsync();
+
+            var entities = await _context.Set<TEntity>()
+                .Where(predicate).AsNoTracking().ToListAsync();
+            if (entities == null)
+                throw new ArgumentNullException(nameof(entities));
+            return entities;
+        }
+        public async Task<List<TEntity>> GetAllAsNoTrackingAsync()
+        {
+
+            var entities = await _context.Set<TEntity>().AsNoTracking().ToListAsync();
             if (entities == null)
                 throw new ArgumentNullException(nameof(entities));
             return entities;
         }
 
-        public async Task<List<TEntity>> GetAllAsync(Expression<Func<TEntity, bool>> predicate)
+        public async Task<List<TEntity>> GetAllAsync()
         {
-            var entities = await _context.Set<TEntity>().Where(predicate).ToListAsync();
+            var entities = await _context.Set<TEntity>().ToListAsync();
             if (entities == null)
                 throw new ArgumentNullException(nameof(entities));
             return entities;
@@ -83,9 +93,11 @@ namespace Infrastructure.Repository
             return entity;
         }
 
-        public async Task<TEntity> GetByIdAsync(int id)
+        public async Task<TEntity> GetByIdAsync(int? id)
         {
-            var entity = await _context.Set<TEntity>().FindAsync(id);
+            if(id==null)
+				throw new ArgumentNullException(nameof(id));
+			var entity = await _context.Set<TEntity>().FindAsync(id);
             _context.Entry(entity).State = EntityState.Detached;
 
             if (entity == null)
@@ -110,7 +122,6 @@ namespace Infrastructure.Repository
         {
             if (entity == null)
                 throw new ArgumentNullException(nameof(entity));
-
             _context.Set<TEntity>().Attach(entity);
             _context.Entry(entity).State = EntityState.Modified;
         }

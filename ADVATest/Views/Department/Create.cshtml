@@ -1,0 +1,50 @@
+﻿@using Domin
+@model DepartmentVM
+
+@{
+    ViewData["Title"] = "Create Department";
+}
+<h2 class="text-center font-weight-bold"> Create Department </h2>
+<div class="row align-items-center justify-content-center">
+    <div class="col-lg-12">
+        <hr />
+        <div class="card">
+            <div class="card-body">
+                <form asp-action="Create" asp-controller="Department" method="post">
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                            <label asp-for="Name" class="lang control-label"></label>
+                            <input asp-for="Name" class="form-control" required maxlength="100" />
+                            <span asp-validation-for="Name" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                            <label asp-for="ManegerId" class="lang control-label"> Maneger Name</label>
+                            <select class="form-control" asp-for="ManegerId" asp-items="@ViewBag.Employee" onchange="GetManegerName(this)">
+                                <option value="@null">choose</option>
+                            </select>
+                            <span asp-validation-for="ManegerId" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-6 form-group" hidden>
+                            <label asp-for="ManegerName" class="lang control-label"></label>
+                            <input asp-for="ManegerName" class="form-control"readonly  maxlength="100" />
+                            <span asp-validation-for="ManegerName" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-6 text-left">
+                            <input type="submit" id="global_save" class="btn btn-primary font-weight-bold" value="Create" />
+                        </div>
+                        <div class="col-6 text-right">
+                            <a class="font-weight-semibold font-size-17" asp-action="GetAll">Back to List!</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@await Html.PartialAsync("~/Views/Shared/_Resuts_Massage.cshtml")
+<script src="~/js/healperscripts.js"></script>

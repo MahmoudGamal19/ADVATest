@@ -11,6 +11,8 @@ namespace Infrastructure.EntityConfigurations
             builder.ToTable("Department");
             builder.HasKey(e => e.Id);
             builder.Property(e => e.Name).HasColumnName("Name").IsRequired();
+            builder.Property(e => e.ManegerId).HasColumnName("Maneger_Id");
+            builder.Property(e => e.ManegerName).HasColumnName("Maneger_Name");
         }
     }
 }

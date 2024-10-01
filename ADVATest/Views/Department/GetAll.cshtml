@@ -1,0 +1,53 @@
+﻿@model IEnumerable<Domin.DepartmentVM>
+
+@{
+    ViewData["Title"] = "Department Display";
+}
+
+<h1 class="text-center font-weight-bold">Display Department</h1>
+
+<p><a asp-action="Create" class=" bx-sm mb-2 font-weight-semibold font-size-18"> Create Department </a></p>
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <table id="datatable-buttons" class="table table-striped table-bordered  nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%; display: block;">
+                    <thead>
+                        <tr>
+                            <td class="text-center font-weight-bold font-size-16">Action</td>
+                            <td><span> ID </span></td>
+                            <td><span> Name </span></td>
+                            <td><span> Maneger Id </span></td>
+                            <td><span> Maneger Name </span></td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model != null)
+                        {
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td >
+                                        <a class="col" title="Edit Employee" asp-route-departmentId="@item.Id" asp-action="Edit">
+                                            <img width="20" height="20" src="https://img.icons8.com/ios/50/edit--v1.png" alt="edit--v1" />
+                                        </a>
+                                        <a class="col" title="Delete Employee" style="cursor:pointer" asp-route-departmentId="@item.Id" asp-action="Delete">
+                                            <img width="20" height="20" src="https://img.icons8.com/material-outlined/24/filled-trash.png" alt="filled-trash" />
+                                        </a>
+                                    </td>
+                                    <td>@item.Id</td>
+                                    <td>@item.Name</td>
+                                    <td>@item.ManegerId</td>
+                                    <td>@item.ManegerName</td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@await Html.PartialAsync("~/Views/Shared/_Resuts_Massage.cshtml")

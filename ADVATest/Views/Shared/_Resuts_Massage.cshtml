@@ -1,0 +1,46 @@
+﻿<!-- #region name -->
+@{
+    string Splitor = "<br>";
+    string Sentence = string.Empty;
+    string Icon = string.Empty;
+    string Title = string.Empty;
+
+    if (!string.IsNullOrEmpty(ViewBag.error))
+    {
+        Sentence = ViewBag.error;
+        Icon = "error";
+        Title = "Error!";
+    }
+
+    if (!string.IsNullOrEmpty(ViewBag.success))
+    {
+        Sentence = ViewBag.success;
+        Icon = "success";
+        Title = "Done";
+    }
+    if (!string.IsNullOrEmpty(ViewBag.info))
+    {
+        Sentence = ViewBag.info;
+        Icon = "info";
+    }
+    if (!string.IsNullOrEmpty(Sentence))
+    {
+        var Sentences = Sentence.Replace("\r\n", Splitor).Split(Splitor);
+        <script>
+            var jsText = '@Html.Raw(Json.Serialize(Sentences))';
+            var text = '';
+            var jsArray = JSON.parse(jsText);
+            for (var i = 0; i < jsArray.length; i++)
+                text += jsArray[i] + '<br>';
+
+            Swal.fire({
+                icon: '@Icon',
+                html: text,
+                title: '@Title'
+            });
+
+        </script>
+    }
+
+}
+<!-- #endregion -->
